@@ -12,13 +12,13 @@ public class PlayerMotion : MonoBehaviour
     private Rigidbody2D myRigidbody;
     [SerializeField]
     private RopeHeadBehavior myRopeHead;
-    
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         myPlayerNumName = myPlayerNum.ToString();
+        myRopeScript = GetComponent<RopeScript>();
     }
 
     private void Update()
