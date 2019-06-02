@@ -72,6 +72,7 @@ public class RopeHeadBehavior : MonoBehaviour
         }
         //myLineRenderer.SetPosition(0, transform.position);
         //myLineRenderer.SetPosition(1, myPlayer.position);
+        FaceAwayFromPlayer();
     }
 
     void RetractedMove()
@@ -139,4 +140,33 @@ public class RopeHeadBehavior : MonoBehaviour
     float step = speed * Time.deltaTime;
     transform.position = Vector3.MoveTowards(transform.position, aerialObjective, step);
     */
+    private void FaceAwayFromPlayer()
+    {
+        if (myHeadState != RopeHeadState.Retracted)
+        {
+            if (!myOwnCollider.enabled)
+            {
+                myOwnCollider.enabled = true;
+                GetComponent<SpriteRenderer>().enabled = true;
+            }
+            Vector3 ForwardsDirection = CalculateDirectionOfExtension();
+
+            float rotZ = Mathf.Atan2(ForwardsDirection.y, ForwardsDirection.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, rotZ + 90);
+            /*
+            Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg; // find the angle in degrees
+            transform.rotation = Quaternion.Euler(0f, 0f, rotZ);
+            */
+        }
+        else
+        {
+            if (myOwnCollider.enabled)
+            {
+                myOwnCollider.enabled = false;
+                GetComponent<SpriteRenderer>().enabled = false;
+            }
+            transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
+    }
 }
