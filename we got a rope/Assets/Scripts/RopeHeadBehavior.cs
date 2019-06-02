@@ -70,8 +70,8 @@ public class RopeHeadBehavior : MonoBehaviour
         {
             AttachedMove();
         }
-        myLineRenderer.SetPosition(0, transform.position);
-        myLineRenderer.SetPosition(1, myPlayer.position);
+        //myLineRenderer.SetPosition(0, transform.position);
+        //myLineRenderer.SetPosition(1, myPlayer.position);
     }
 
     void RetractedMove()

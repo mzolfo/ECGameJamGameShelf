@@ -18,7 +18,7 @@ public class PlayerMotion : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         myPlayerNumName = myPlayerNum.ToString();
-        myRopeScript = GetComponent<RopeScript>();
+       // myRopeScript = GetComponent<RopeScript>();
     }
 
     private void Update()
