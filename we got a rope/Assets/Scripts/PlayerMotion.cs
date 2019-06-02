@@ -12,17 +12,31 @@ public class PlayerMotion : MonoBehaviour
     private Rigidbody2D myRigidbody;
     [SerializeField]
     private RopeHeadBehavior myRopeHead;
+    //private PlayerAnimationScript myAnimationScript;
+
+    private Animator myAnimator;
+
+    private bool facingRight = true;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         myPlayerNumName = myPlayerNum.ToString();
-       // myRopeScript = GetComponent<RopeScript>();
+        myAnimator = GetComponent<Animator>();
+        //myAnimationScript = GetComponent<PlayerAnimationScript>();
+        // myRopeScript = GetComponent<RopeScript>();
+        //myAnimationScript.SetPlayerName(myPlayerNumName);
     }
 
     private void Update()
     {
+        //if (animPlayerSet == false)
+        //{
+        //    myAnimationScript.player = myPlayerNumName;
+        //    animPlayerSet = true;
+        //}
+
         if (myRopeHead.myHeadState == RopeHeadState.Retracted)
         {
             if (Input.GetButtonDown(myPlayerNumName + "Fire"))
@@ -30,14 +44,51 @@ public class PlayerMotion : MonoBehaviour
                 FireRope();
             }
         }
+
+        //Player Animation Stuff
+        myAnimator.SetFloat("Speed", myRigidbody.velocity.magnitude);
+
+        if (Input.GetAxisRaw(myPlayerNumName + "Horizontal") != 0 && myRigidbody.velocity.magnitude > 0)
+        {
+            myAnimator.SetBool("Side", true);
+            myAnimator.SetBool("Up", false);
+            myAnimator.SetBool("Down", false);
+
+        }
+        else if (Input.GetAxisRaw(myPlayerNumName + "Vertical") > 0 && myRigidbody.velocity.magnitude > 0 &&
+            Input.GetAxis(myPlayerNumName + "Horizontal") != 1 && Input.GetAxis(myPlayerNumName + "Horizontal") != -1)
+        {
+            myAnimator.SetBool("Up", true);
+            myAnimator.SetBool("Down", false);
+            myAnimator.SetBool("Side", false);
+        }
+        else if (Input.GetAxisRaw(myPlayerNumName + "Vertical") < 0 && myRigidbody.velocity.magnitude > 0 &&
+            Input.GetAxis(myPlayerNumName + "Horizontal") != 1 && Input.GetAxis(myPlayerNumName + "Horizontal") != -1)
+        {
+            myAnimator.SetBool("Down", true);
+            myAnimator.SetBool("Up", false);
+            myAnimator.SetBool("Side", false);
+        }
     }
 
     private void FixedUpdate()
     {
-        Move(); 
+        Move();
+
+        float h = Input.GetAxis(myPlayerNumName + "Horizontal");
+        if (h > 0 && !facingRight)
+            Flip();
+        else if (h < 0 && facingRight)
+            Flip();
     }
-    
-    
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
 
     private void Move()
     {

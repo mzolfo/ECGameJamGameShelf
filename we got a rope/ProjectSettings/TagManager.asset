@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Background
+  - Hook
   layers:
   - Default
   - TransparentFX
@@ -14,9 +16,9 @@ TagManager:
   - 
   - 
   - Rope
-  - 
-  - 
-  - 
+  - Background
+  - Player
+  - Hook
   - 
   - 
   - 
@@ -46,4 +48,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3332435941
+    locked: 0
+  - name: HookArm
+    uniqueID: 3940789657
     locked: 0

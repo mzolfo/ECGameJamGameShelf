@@ -119,12 +119,19 @@ public class RopeHeadBehavior : MonoBehaviour
 
     private bool HasReachedOtherPlayer()
     {
+        /*
+         * This should be changed to a trigger enter so that the sprite doesnt freak out when it hits the center of the other player.
+         * A trigger would also let us discern what exactly the hook is hitting.
+         * 
+         */
+
         if (this.transform.position == otherPlayer.position)
         {
             return true;
         }
         else { return false; }       
     }
+
     private Vector3 CalculateDirectionOfMyPlayer()
     {
         //this object.position - player.position
@@ -169,4 +176,5 @@ public class RopeHeadBehavior : MonoBehaviour
             transform.rotation = new Quaternion(0, 0, 0, 0);
         }
     }
+
 }

@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 50be31fde124f7844a286156aa3c608c
+guid: f8e20164d44fd3c4bbb99bcd079f9431
 TextureImporter:
   fileIDToRecycleName:
-    21300000: BlueGuySpriteSheet_0
-    21300002: BlueGuySpriteSheet_1
-    21300004: BlueGuySpriteSheet_2
-    21300006: BlueGuySpriteSheet_3
-    21300008: BlueGuySpriteSheet_4
-    21300010: BlueGuySpriteSheet_5
-    21300012: BlueGuySpriteSheet_6
-    21300014: BlueGuySpriteSheet_7
+    21300000: OrangeGuySpriteSheet_0
+    21300002: OrangeGuySpriteSheet_1
+    21300004: OrangeGuySpriteSheet_2
+    21300006: OrangeGuySpriteSheet_3
+    21300008: OrangeGuySpriteSheet_4
+    21300010: OrangeGuySpriteSheet_5
+    21300012: OrangeGuySpriteSheet_6
+    21300014: OrangeGuySpriteSheet_7
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -92,47 +92,47 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BlueGuySpriteSheet_0
+      name: OrangeGuySpriteSheet_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 0
-        width: 68
-        height: 96
-      alignment: 9
-      pivot: {x: 0.5127083, y: 0.2569559}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 210356dd30daf324eab161818804f423
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BlueGuySpriteSheet_1
-      rect:
-        serializedVersion: 2
-        x: 108
+        x: 11
         y: 0
         width: 69
-        height: 100
+        height: 97
       alignment: 9
-      pivot: {x: 0.53131014, y: 0.2753192}
+      pivot: {x: 0.510973, y: 0.31716445}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02d7d98071923ab4fa87b502a1523112
+      spriteID: fc484d832b1399c459c0ef69af3def28
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlueGuySpriteSheet_2
+      name: OrangeGuySpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 0
+        width: 67
+        height: 100
+      alignment: 9
+      pivot: {x: 0.535499, y: 0.32157922}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d605f03ea1e24d74a972a33adef5dc13
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OrangeGuySpriteSheet_2
       rect:
         serializedVersion: 2
         x: 208
@@ -140,59 +140,59 @@ TextureImporter:
         width: 69
         height: 100
       alignment: 9
-      pivot: {x: 0.5438343, y: 0.26667762}
+      pivot: {x: 0.54647714, y: 0.33454156}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27bba8844f8cd854bba3fa97579a6110
+      spriteID: f990a9688264e7d45b65a98a541a850f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlueGuySpriteSheet_3
+      name: OrangeGuySpriteSheet_3
       rect:
         serializedVersion: 2
-        x: 312
+        x: 314
         y: 0
-        width: 64
+        width: 63
         height: 100
       alignment: 9
-      pivot: {x: 0.54115075, y: 0.30988547}
+      pivot: {x: 0.50629294, y: 0.36839432}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6d95b1747074bf4ab135bc7f80e100e
+      spriteID: 2ce0ea0c9acc0854081c1a1aef90d8a3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlueGuySpriteSheet_4
+      name: OrangeGuySpriteSheet_4
       rect:
         serializedVersion: 2
         x: 412
         y: 0
         width: 64
-        height: 100
+        height: 99
       alignment: 9
-      pivot: {x: 0.5135031, y: 0.29260233}
+      pivot: {x: 0.52366114, y: 0.36017805}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 278512f9428c86c4e89831b2da79e9d1
+      spriteID: b97cc7742772fbb45b563f2a8e2e4db6
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlueGuySpriteSheet_5
+      name: OrangeGuySpriteSheet_5
       rect:
         serializedVersion: 2
         x: 510
@@ -200,19 +200,19 @@ TextureImporter:
         width: 67
         height: 100
       alignment: 9
-      pivot: {x: 0.46130645, y: 0.2753192}
+      pivot: {x: 0.48278445, y: 0.34389675}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a0592fbbb3bc614f890c3b9da4788f0
+      spriteID: f3ce60643ae34f24fac86e7ae0774469
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlueGuySpriteSheet_6
+      name: OrangeGuySpriteSheet_6
       rect:
         serializedVersion: 2
         x: 611
@@ -220,19 +220,19 @@ TextureImporter:
         width: 67
         height: 100
       alignment: 9
-      pivot: {x: 0.46130645, y: 0.26667762}
+      pivot: {x: 0.49408415, y: 0.3176152}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a1c80c4fb7c47443895f445920325b6
+      spriteID: 39490ee7b6cd6a6469042ace3e6626d8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlueGuySpriteSheet_7
+      name: OrangeGuySpriteSheet_7
       rect:
         serializedVersion: 2
         x: 712
@@ -240,13 +240,13 @@ TextureImporter:
         width: 68
         height: 100
       alignment: 9
-      pivot: {x: 0.46187636, y: 0.2753192}
+      pivot: {x: 0.47668278, y: 0.321936}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dfadf15f16bbf7a4c95a1f7274fe1791
+      spriteID: bc1ce150f6b2a764390f14d8acb0a02d
       vertices: []
       indices: 
       edges: []
@@ -254,7 +254,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3a2cc9ccb80278847bd71b6cbede5c25
+    spriteID: b64704d12e9012d479ecf7016fed6392
     vertices: []
     indices: 
     edges: []
