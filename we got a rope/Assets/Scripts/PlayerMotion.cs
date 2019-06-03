@@ -50,7 +50,10 @@ public class PlayerMotion : MonoBehaviour
             else
             {
                 if (attachedObject != null)
-                attachedObject.GetComponent<Rigidbody2D>().velocity = new Vector2();
+                {
+                    attachedObject.GetComponent<Rigidbody2D>().velocity = new Vector2();
+                    attachedObject.GetComponent<MoveableBlockScript>().ropeHeld = false;
+                }
                 attachedObject = null;
                 heldDistance = -1;
             }
@@ -110,13 +113,9 @@ public class PlayerMotion : MonoBehaviour
         float verticalInput;
         horizontalInput = Input.GetAxisRaw(myPlayerNumName + "Horizontal");
         verticalInput = Input.GetAxisRaw(myPlayerNumName + "Vertical");
-
-
         Vector2 movementVector = new Vector2(horizontalInput * movementSpeed * Time.deltaTime, verticalInput * movementSpeed * Time.deltaTime);
         myRigidbody.velocity = movementVector;
-        Debug.Log("The vector magnitude: " + myRigidbody.velocity.magnitude);
 
-        
         /*
         horizontalInput = Input.GetAxisRaw(inputType + "_Horizontal");
         Vector2 movementVector = new Vector2(horizontalInput * movementSpeed * Time.deltaTime, myRigidBody2d.velocity.y);
@@ -139,6 +138,48 @@ public class PlayerMotion : MonoBehaviour
     private void HoldRope()
     {
         attachedObject = myRopeHeadScript.attachedObject;
+        attachedObject.GetComponent<MoveableBlockScript>().ropeHeld = true;
+
+        if (attachedObject.GetComponent<MoveableBlockScript>().myBlockMovementType == BlockMovementType.Vertical)
+            VerticalBlockMove();
+        if (attachedObject.GetComponent<MoveableBlockScript>().myBlockMovementType == BlockMovementType.Horizontal)
+            HorizontalBlockMove();
+
+    }
+
+    private void VerticalBlockMove()
+    {
+        Rigidbody2D attachedRB = attachedObject.GetComponent<Rigidbody2D>();
+        if (attachedObject == null)
+            Debug.LogError("Nothing attached, why is this showing.");
+        if (heldDistance == -1)
+            heldDistance = Vector3.Distance(transform.position, attachedObject.position);
+        float currentDistance = Vector3.Distance(transform.position, attachedObject.position);
+        if (currentDistance > heldDistance)
+        {
+            if (transform.position.y > myRopeHead.position.y + 1)
+            {
+                Debug.Log("You are above");
+                if (Input.GetAxisRaw(myPlayerNumName + "Vertical") >= 0)
+                    attachedRB.velocity = myRigidbody.velocity;
+            }
+            else if (transform.position.y < myRopeHead.position.y - 1)
+            {
+                Debug.Log("You are below");
+                if (Input.GetAxisRaw(myPlayerNumName + "Vertical") <= 0)
+                    attachedRB.velocity = myRigidbody.velocity;
+            }
+            else
+                attachedRB.velocity = new Vector2();
+        }
+        else if (currentDistance < heldDistance)
+        {
+            attachedRB.velocity = new Vector2();
+            heldDistance = currentDistance;
+        }
+    }
+    private void HorizontalBlockMove()
+    {
         Rigidbody2D attachedRB = attachedObject.GetComponent<Rigidbody2D>();
 
         if (attachedObject == null)
@@ -153,18 +194,18 @@ public class PlayerMotion : MonoBehaviour
         if (currentDistance > heldDistance)
         {
 
-            if (transform.position.y > myRopeHead.position.y + 1)
+            if (transform.position.x > myRopeHead.position.x + 1)
             {
                 Debug.Log("You are above");
 
-                if (Input.GetAxisRaw(myPlayerNumName + "Vertical") >= 0)
+                if (Input.GetAxisRaw(myPlayerNumName + "Horizontal") >= 0)
                     attachedRB.velocity = myRigidbody.velocity;
             }
-            else if (transform.position.y < myRopeHead.position.y - 1)
+            else if (transform.position.x < myRopeHead.position.x - 1)
             {
                 Debug.Log("You are below");
 
-                if (Input.GetAxisRaw(myPlayerNumName + "Vertical") <= 0)
+                if (Input.GetAxisRaw(myPlayerNumName + "Horizontal") <= 0)
                     attachedRB.velocity = myRigidbody.velocity;
             }
             else
@@ -175,9 +216,5 @@ public class PlayerMotion : MonoBehaviour
             attachedRB.velocity = new Vector2();
             heldDistance = currentDistance;
         }
-        
-
-
-
     }
 }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum BlockInteractionState { Idle, Grabbed };
+public enum BlockMovementType { Horizontal, Vertical, Pivot, OmniDirectional };
 public class MoveableBlockScript : MonoBehaviour
 {
 
-    public enum BlockMovementType { Horizontal, Vertical, Pivot, OmniDirectional};
+    
     public BlockMovementType myBlockMovementType;
 
     //public enum InteractionState { Idle, Grabbed };
@@ -23,6 +24,7 @@ public class MoveableBlockScript : MonoBehaviour
 
     [SerializeField]
     private bool pushable;
+    public bool ropeHeld = false;
 
     void Start()
     {
@@ -39,25 +41,33 @@ public class MoveableBlockScript : MonoBehaviour
 
         if (currentState == BlockInteractionState.Grabbed)
         {
-
+            
             mySpriteRenderer.sprite = activeSprite;
 
-            if (myBlockMovementType == BlockMovementType.Horizontal)
-                HorizontalMovement();
-            else if (myBlockMovementType == BlockMovementType.Vertical)
-                VerticalMovement();
-            else if (myBlockMovementType == BlockMovementType.Pivot)
-                PivotMovement();
-            else if (myBlockMovementType == BlockMovementType.OmniDirectional)
-                OmniDirectionalMovement();
+            if (ropeHeld)
+            {
+                if (myBlockMovementType == BlockMovementType.Horizontal)
+                    HorizontalMovement();
+                else if (myBlockMovementType == BlockMovementType.Vertical)
+                    VerticalMovement();
+                else if (myBlockMovementType == BlockMovementType.Pivot)
+                    PivotMovement();
+                else if (myBlockMovementType == BlockMovementType.OmniDirectional)
+                    OmniDirectionalMovement();
+            }
+            else if (!pushable)
+            {
+                myRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+
         }
         else if (!pushable)
         {
+            //something about pushable shit
             myRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
             mySpriteRenderer.sprite = idleSprite;
         }
-        else
-            mySpriteRenderer.sprite = idleSprite;
+            
     }
 
     private void HorizontalMovement()
@@ -87,8 +97,4 @@ public class MoveableBlockScript : MonoBehaviour
         myRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
-    public void StopMovingBlock()
-    {
-        myRigidbody.velocity = new Vector2();
-    }
 }
