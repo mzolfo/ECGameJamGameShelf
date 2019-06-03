@@ -87,4 +87,8 @@ public class MoveableBlockScript : MonoBehaviour
         myRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
+    public void StopMovingBlock()
+    {
+        myRigidbody.velocity = new Vector2();
+    }
 }

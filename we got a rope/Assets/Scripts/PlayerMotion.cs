@@ -10,14 +10,17 @@ public class PlayerMotion : MonoBehaviour
     private float movementSpeed;
     public string myPlayerNumName;
     private Rigidbody2D myRigidbody;
-    [SerializeField]
-    private RopeHeadBehavior myRopeHead;
+    private RopeHeadBehavior myRopeHeadScript;
     private SpriteRenderer mySpriteRend;
+    [SerializeField]
+    private Transform myRopeHead;
+    private Transform attachedObject;
 
     private Animator myAnimator;
 
     private bool facingRight = true;
-    private float distance = -1;
+    private float heldDistance = -1;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,13 +29,13 @@ public class PlayerMotion : MonoBehaviour
         myPlayerNumName = myPlayerNum.ToString();
         myAnimator = GetComponent<Animator>();
         mySpriteRend = GetComponent<SpriteRenderer>();
-
+        myRopeHeadScript = myRopeHead.GetComponent<RopeHeadBehavior>();
     }
 
     private void Update()
     {
 
-        if (myRopeHead.myHeadState == RopeHeadState.Retracted)
+        if (myRopeHeadScript.myHeadState == RopeHeadState.Retracted)
         {
             if (Input.GetButtonDown(myPlayerNumName + "Fire"))
             {
@@ -40,10 +43,18 @@ public class PlayerMotion : MonoBehaviour
             }
         }
 
-        if (myRopeHead.myHeadState == RopeHeadState.Attached)
+        if (myRopeHeadScript.myHeadState == RopeHeadState.Attached)
         {
             if (Input.GetButton(myPlayerNumName + "Hold"))
                 HoldRope();
+            else
+            {
+                if (attachedObject != null)
+                attachedObject.GetComponent<Rigidbody2D>().velocity = new Vector2();
+                attachedObject = null;
+                heldDistance = -1;
+            }
+
         }
 
         //Player Animation Stuff
@@ -95,12 +106,17 @@ public class PlayerMotion : MonoBehaviour
 
     private void Move()
     {
-         float horizontalInput;
-         float verticalInput;
-         horizontalInput = Input.GetAxisRaw(myPlayerNumName + "Horizontal");
-         verticalInput = Input.GetAxisRaw(myPlayerNumName + "Vertical");
+        float horizontalInput;
+        float verticalInput;
+        horizontalInput = Input.GetAxisRaw(myPlayerNumName + "Horizontal");
+        verticalInput = Input.GetAxisRaw(myPlayerNumName + "Vertical");
+
+
         Vector2 movementVector = new Vector2(horizontalInput * movementSpeed * Time.deltaTime, verticalInput * movementSpeed * Time.deltaTime);
         myRigidbody.velocity = movementVector;
+        Debug.Log("The vector magnitude: " + myRigidbody.velocity.magnitude);
+
+        
         /*
         horizontalInput = Input.GetAxisRaw(inputType + "_Horizontal");
         Vector2 movementVector = new Vector2(horizontalInput * movementSpeed * Time.deltaTime, myRigidBody2d.velocity.y);
@@ -110,7 +126,7 @@ public class PlayerMotion : MonoBehaviour
 
     private void FireRope()
     {
-        myRopeHead.myHeadState = RopeHeadState.Extending;
+        myRopeHeadScript.myHeadState = RopeHeadState.Extending;
         //we want this one to fire a segmented rope in a line in the direction of the other player, what do we need.
        //take it in steps: first we calculate which direction the rope will fire in
        //then we send the end of it in that direction the end must be mobile and able to collide with things but ignore the player's movement to begin
@@ -122,13 +138,45 @@ public class PlayerMotion : MonoBehaviour
 
     private void HoldRope()
     {
-        Transform attachedObject = myRopeHead.attachedObject;
+        attachedObject = myRopeHeadScript.attachedObject;
+        Rigidbody2D attachedRB = attachedObject.GetComponent<Rigidbody2D>();
 
         if (attachedObject == null)
             Debug.LogError("Nothing attached, why is this showing.");
 
-        if (distance == -1)
-            distance = Vector3.Distance(transform.position, attachedObject.position);
+        if (heldDistance == -1)
+            heldDistance = Vector3.Distance(transform.position, attachedObject.position);
+
+        float currentDistance = Vector3.Distance(transform.position, attachedObject.position);
+
+
+        if (currentDistance > heldDistance)
+        {
+
+            if (transform.position.y > myRopeHead.position.y + 1)
+            {
+                Debug.Log("You are above");
+
+                if (Input.GetAxisRaw(myPlayerNumName + "Vertical") >= 0)
+                    attachedRB.velocity = myRigidbody.velocity;
+            }
+            else if (transform.position.y < myRopeHead.position.y - 1)
+            {
+                Debug.Log("You are below");
+
+                if (Input.GetAxisRaw(myPlayerNumName + "Vertical") <= 0)
+                    attachedRB.velocity = myRigidbody.velocity;
+            }
+            else
+                attachedRB.velocity = new Vector2();
+        }
+        else if (currentDistance < heldDistance)
+        {
+            attachedRB.velocity = new Vector2();
+            heldDistance = currentDistance;
+        }
+        
+
 
 
     }

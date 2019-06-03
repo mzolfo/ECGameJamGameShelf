@@ -112,6 +112,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &38394281 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5001511580265860967, guid: b68d9edf9a0401f44ac429e929ec418c,
+    type: 3}
+  m_PrefabInstance: {fileID: 6064787881926334300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &226827122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -192,6 +198,11 @@ PrefabInstance:
     - target: {fileID: 5179460644449743999, guid: 74789d90b7281964e94563524b39b5f5,
         type: 3}
       propertyPath: myRopeHead
+      value: 
+      objectReference: {fileID: 1833850565}
+    - target: {fileID: 5179460644449743999, guid: 74789d90b7281964e94563524b39b5f5,
+        type: 3}
+      propertyPath: myRopeHeadScript
       value: 
       objectReference: {fileID: 1243701833085408376}
     m_RemovedComponents: []
@@ -277,6 +288,11 @@ PrefabInstance:
         type: 3}
       propertyPath: myRopeHead
       value: 
+      objectReference: {fileID: 38394281}
+    - target: {fileID: 5179460644449743999, guid: 74789d90b7281964e94563524b39b5f5,
+        type: 3}
+      propertyPath: myRopeHeadScript
+      value: 
       objectReference: {fileID: 1243701833192429629}
     - target: {fileID: 1717524345, guid: 74789d90b7281964e94563524b39b5f5, type: 3}
       propertyPath: m_Controller
@@ -360,7 +376,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -424,7 +440,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956993109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.98, y: 2.67, z: 0}
+  m_LocalPosition: {x: 0.23, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -536,13 +552,46 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 529313832}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1833850562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2949435919976898026, guid: cd06c7fd3ec28504dbd512841abeef60,
+    type: 3}
+  m_PrefabInstance: {fileID: 4155701426205411728}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1833850565 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2949435919976898030, guid: cd06c7fd3ec28504dbd512841abeef60,
+    type: 3}
+  m_PrefabInstance: {fileID: 4155701426205411728}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &1833850566
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833850562}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &1243701833085408376 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2949435919976898024, guid: cd06c7fd3ec28504dbd512841abeef60,
     type: 3}
   m_PrefabInstance: {fileID: 4155701426205411728}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1833850562}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89b2f6735af862f4bb651039d0d63e76, type: 3}

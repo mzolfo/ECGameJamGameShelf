@@ -22,6 +22,7 @@ public class RopeHeadBehavior : MonoBehaviour
     private MoveableBlockScript attachedObjectScript;
     private LineRenderer myLineRenderer;
     private BoxCollider2D myOwnCollider;
+    private Rigidbody2D myRigidBody;
 
     private bool hasReachedOtherPlayer = false;
 
@@ -43,6 +44,7 @@ public class RopeHeadBehavior : MonoBehaviour
     {//do we need this to repeat as we enter new scenes?
         myOwnCollider = GetComponent<BoxCollider2D>();
         myLineRenderer = GetComponent<LineRenderer>();
+        myRigidBody = GetComponent<Rigidbody2D>();
         if (MyAssignedPlayer == 1)
         {
             myPlayer = Player1.transform;
@@ -105,6 +107,9 @@ public class RopeHeadBehavior : MonoBehaviour
         attachedObjectScript = attachedObject.GetComponent<MoveableBlockScript>();
         attachedObjectScript.attachedPlayer = myPlayer;
         attachedObjectScript.currentState = BlockInteractionState.Grabbed;
+
+        myRigidBody.constraints = attachedObject.GetComponent<Rigidbody2D>().constraints;
+        myRigidBody.velocity = attachedObject.GetComponent<Rigidbody2D>().velocity;
 
         if (Input.GetButton(myPlayer.GetComponent<PlayerMotion>().myPlayerNumName + "Fire"))
         {
