@@ -5,10 +5,11 @@ using UnityEngine;
 public class WhitePlate : MonoBehaviour
 {
     public bool fadedToWhite;
+    private Animator myAnimator;
     // Start is called before the first frame update
     void Start()
     {
-        
+        myAnimator = GetComponent<Animator>();
     }
     private void Awake()
     {
@@ -18,6 +19,15 @@ public class WhitePlate : MonoBehaviour
     void Update()
     {
         
+    }
+    public void FadeToWhite()
+    {
+        myAnimator.SetInteger("FadeState", 2);
+    }
+
+    public void FadeFromWhite()
+    {
+        myAnimator.SetInteger("FadeState", 1);
     }
     public void Endframe()
     {
