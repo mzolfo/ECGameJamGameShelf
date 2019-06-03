@@ -74,37 +74,51 @@ public class RopeHeadBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (myHeadState == RopeHeadState.Retracted)
+        if (!hasReachedOtherPlayer)
         {
-            RetractedMove();
-        }
-        else if (myHeadState == RopeHeadState.Extending)
-        {
-            CheckIfPlayerHasBeenHit();
-            
-        }
-        else if (myHeadState == RopeHeadState.Retracting)
-        {
-            RetractingMove();
-        }
-        else if (myHeadState == RopeHeadState.Attached)
-        {
-            AttachedMove();
-        }
-        FaceAwayFromPlayer();
+            if (myHeadState == RopeHeadState.Retracted)
+            {
+                RetractedMove();
+            }
+            else if (myHeadState == RopeHeadState.Extending)
+            {
+                CheckIfPlayerHasBeenHit();
 
-        if (myHeadState == RopeHeadState.Retracted || myHeadState == RopeHeadState.Attached)
+            }
+            else if (myHeadState == RopeHeadState.Retracting)
+            {
+                RetractingMove();
+            }
+            else if (myHeadState == RopeHeadState.Attached)
+            {
+                AttachedMove();
+            }
+            FaceAwayFromPlayer();
+
+            if (myHeadState == RopeHeadState.Retracted || myHeadState == RopeHeadState.Attached)
+            {
+                if (MyAttachedRope.AudioIsPlaying)
+                {
+                    MyAttachedRope.StopRopeNoise();
+                }
+            }
+            else if (myHeadState == RopeHeadState.Retracting || myHeadState == RopeHeadState.Extending)
+            {
+                if (!MyAttachedRope.AudioIsPlaying)
+                {
+                    MyAttachedRope.PlayRopeNoise();
+                }
+            }
+        }
+        else
         {
+            if (myHeadState == RopeHeadState.Retracted)
+            {
+                RetractedMove();
+            }
             if (MyAttachedRope.AudioIsPlaying)
             {
                 MyAttachedRope.StopRopeNoise();
-            }
-        }
-        else if (myHeadState == RopeHeadState.Retracting || myHeadState == RopeHeadState.Extending)
-        {
-            if (!MyAttachedRope.AudioIsPlaying)
-            {
-                MyAttachedRope.PlayRopeNoise();
             }
         }
     }
@@ -191,7 +205,9 @@ public class RopeHeadBehavior : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player2"))
             {
-                BounceOffObject();
+                hasReachedOtherPlayer = true;
+                SetWin();
+                myHeadState = RopeHeadState.Retracted;
             }
             else if (collision.gameObject.CompareTag("MoveableBlock") || collision.gameObject.layer == 12)
             {
@@ -204,7 +220,9 @@ public class RopeHeadBehavior : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player1"))
             {
-                BounceOffObject();
+                hasReachedOtherPlayer = true;
+                SetWin();
+                myHeadState = RopeHeadState.Retracted;
             }
             else if (collision.gameObject.CompareTag("MoveableBlock") || collision.gameObject.layer == 13)
             {
@@ -258,6 +276,8 @@ public class RopeHeadBehavior : MonoBehaviour
             {
                 Debug.Log("Hit player2");
                 hasReachedOtherPlayer = true;
+                SetWin();
+                myHeadState = RopeHeadState.Retracted;
             }
             //yay win
             else
@@ -272,6 +292,8 @@ public class RopeHeadBehavior : MonoBehaviour
             {
                 Debug.Log("Hit player1");
                 hasReachedOtherPlayer = true;
+                SetWin();
+                myHeadState = RopeHeadState.Retracted;
             }
             //then win
             else
@@ -280,4 +302,10 @@ public class RopeHeadBehavior : MonoBehaviour
             }
         }
     }
+
+    private static void SetWin()
+    {
+        PlayerMotion.hasWon = true;
+    }
+
 }

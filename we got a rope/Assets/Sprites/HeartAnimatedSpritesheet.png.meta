@@ -1,15 +1,12 @@
 fileFormatVersion: 2
-guid: f8e20164d44fd3c4bbb99bcd079f9431
+guid: a4a8dbcc8c836134f97eca47a51ce489
 TextureImporter:
   fileIDToRecycleName:
-    21300000: OrangeGuySpriteSheet_0
-    21300002: OrangeGuySpriteSheet_1
-    21300004: OrangeGuySpriteSheet_2
-    21300006: OrangeGuySpriteSheet_3
-    21300008: OrangeGuySpriteSheet_4
-    21300010: OrangeGuySpriteSheet_5
-    21300012: OrangeGuySpriteSheet_6
-    21300014: OrangeGuySpriteSheet_7
+    21300000: HeartAnimatedSpritesheet_0
+    21300002: HeartAnimatedSpritesheet_1
+    21300004: HeartAnimatedSpritesheet_2
+    21300006: HeartAnimatedSpritesheet_3
+    21300008: HeartAnimatedSpritesheet_4
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -92,161 +89,101 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: OrangeGuySpriteSheet_0
+      name: HeartAnimatedSpritesheet_0
       rect:
         serializedVersion: 2
-        x: 11
+        x: 52
         y: 0
-        width: 69
-        height: 97
-      alignment: 9
-      pivot: {x: 0.5, y: 0.33}
+        width: 40
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc484d832b1399c459c0ef69af3def28
+      spriteID: 9024fc02f0f40b145a4a9de0c39ca44a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OrangeGuySpriteSheet_1
+      name: HeartAnimatedSpritesheet_1
       rect:
         serializedVersion: 2
-        x: 110
+        x: 113
         y: 0
-        width: 67
+        width: 53
         height: 100
-      alignment: 9
-      pivot: {x: 0.55, y: 0.33}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d605f03ea1e24d74a972a33adef5dc13
+      spriteID: 2ee4b896280d4d04ca54785ec6bc6eb7
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OrangeGuySpriteSheet_2
+      name: HeartAnimatedSpritesheet_2
       rect:
         serializedVersion: 2
-        x: 209
+        x: 171
         y: 0
-        width: 69
+        width: 55
         height: 100
-      alignment: 9
-      pivot: {x: 0.55, y: 0.33}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f990a9688264e7d45b65a98a541a850f
+      spriteID: 75c5651493fb2bc4789cb7a412e31a69
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OrangeGuySpriteSheet_3
+      name: HeartAnimatedSpritesheet_3
       rect:
         serializedVersion: 2
-        x: 314
+        x: 235
         y: 0
-        width: 63
+        width: 50
         height: 100
-      alignment: 9
-      pivot: {x: 0.7, y: 0.33}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ce0ea0c9acc0854081c1a1aef90d8a3
+      spriteID: 7ded827b4c4c3c248bfc619dbecc0fcd
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OrangeGuySpriteSheet_4
+      name: HeartAnimatedSpritesheet_4
       rect:
         serializedVersion: 2
-        x: 412
+        x: 4
         y: 0
-        width: 64
-        height: 99
-      alignment: 9
-      pivot: {x: 0.7, y: 0.33}
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b97cc7742772fbb45b563f2a8e2e4db6
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: OrangeGuySpriteSheet_5
-      rect:
-        serializedVersion: 2
-        x: 510
-        y: 0
-        width: 67
-        height: 100
-      alignment: 9
-      pivot: {x: 0.48278445, y: 0.34389675}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3ce60643ae34f24fac86e7ae0774469
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: OrangeGuySpriteSheet_6
-      rect:
-        serializedVersion: 2
-        x: 611
-        y: 0
-        width: 67
-        height: 100
-      alignment: 9
-      pivot: {x: 0.4738742, y: 0.33386463}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 39490ee7b6cd6a6469042ace3e6626d8
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: OrangeGuySpriteSheet_7
-      rect:
-        serializedVersion: 2
-        x: 712
-        y: 0
-        width: 68
-        height: 100
-      alignment: 9
-      pivot: {x: 0.49261385, y: 0.3246442}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc1ce150f6b2a764390f14d8acb0a02d
+      spriteID: 6d2a6eb76c503cb47a4659e2ad9cf0d1
       vertices: []
       indices: 
       edges: []
@@ -254,7 +191,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b64704d12e9012d479ecf7016fed6392
+    spriteID: afd14d314e416584192379494ec10c3a
     vertices: []
     indices: 
     edges: []

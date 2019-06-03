@@ -23,6 +23,18 @@ public class PlayerMotion : MonoBehaviour
 
     private bool facingRight = true;
     private float heldDistance = -1;
+    public static bool hasWon = false;
+
+    [SerializeField]
+    private Transform player1WinPos;
+    [SerializeField]
+    private Transform player2WinPos;
+    [SerializeField]
+    private Transform victoryHeartsPos;
+    [SerializeField]
+    private GameObject victoryHearts;
+
+    private Vector2 myWinPos;
 
 
     // Start is called before the first frame update
@@ -33,62 +45,93 @@ public class PlayerMotion : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         mySpriteRend = GetComponent<SpriteRenderer>();
         myRopeHeadScript = myRopeHead.GetComponent<RopeHeadBehavior>();
+ 
     }
 
     private void Update()
     {
 
-        if (myRopeHeadScript.myHeadState == RopeHeadState.Retracted)
+        if (!hasWon)
         {
-            if (Input.GetButtonDown(myPlayerNumName + "Fire"))
+            if (myRopeHeadScript.myHeadState == RopeHeadState.Retracted)
             {
-                FireRope();
-            }
-        }
-
-        if (myRopeHeadScript.myHeadState == RopeHeadState.Attached)
-        {
-            if (Input.GetButton(myPlayerNumName + "Hold"))
-                HoldRope();
-            else
-            {
-                if (attachedObject != null)
+                if (Input.GetButtonDown(myPlayerNumName + "Fire"))
                 {
-                    attachedObject.GetComponent<Rigidbody2D>().velocity = new Vector2();
-                    attachedObject.GetComponent<MoveableBlockScript>().ropeHeld = false;
+                    FireRope();
                 }
-                attachedObject = null;
-                heldDistance = -1;
             }
 
+            if (myRopeHeadScript.myHeadState == RopeHeadState.Attached)
+            {
+                if (Input.GetButton(myPlayerNumName + "Hold"))
+                    HoldRope();
+                else
+                {
+                    if (attachedObject != null)
+                    {
+                        attachedObject.GetComponent<Rigidbody2D>().velocity = new Vector2();
+                        attachedObject.GetComponent<MoveableBlockScript>().ropeHeld = false;
+                    }
+                    attachedObject = null;
+                    heldDistance = -1;
+                }
+
+            }
+
+            //Player Animation Stuff
+            myAnimator.SetFloat("Speed", myRigidbody.velocity.magnitude);
+
+            if (Input.GetAxisRaw(myPlayerNumName + "Horizontal") != 0 && myRigidbody.velocity.magnitude > 0)
+            {
+                myAnimator.SetBool("Side", true);
+                myAnimator.SetBool("Up", false);
+                myAnimator.SetBool("Down", false);
+                mySpriteRend.sortingOrder = 0;
+            }
+            else if (Input.GetAxisRaw(myPlayerNumName + "Vertical") > 0 && myRigidbody.velocity.magnitude > 0 &&
+                Input.GetAxis(myPlayerNumName + "Horizontal") != 1 && Input.GetAxis(myPlayerNumName + "Horizontal") != -1)
+            {
+                myAnimator.SetBool("Up", true);
+                myAnimator.SetBool("Down", false);
+                myAnimator.SetBool("Side", false);
+                mySpriteRend.sortingOrder = 2;
+            }
+            else if (Input.GetAxisRaw(myPlayerNumName + "Vertical") < 0 && myRigidbody.velocity.magnitude > 0 &&
+                Input.GetAxis(myPlayerNumName + "Horizontal") != 1 && Input.GetAxis(myPlayerNumName + "Horizontal") != -1)
+            {
+                myAnimator.SetBool("Down", true);
+                myAnimator.SetBool("Up", false);
+                myAnimator.SetBool("Side", false);
+                mySpriteRend.sortingOrder = 0;
+            }
+        }
+        else
+        {
+            if (myWinPos != (Vector2)transform.position)
+            {
+                MovePlayerTowardsWinPosition();
+                myAnimator.SetFloat("Speed", 0);
+                myAnimator.SetBool("Side", true);
+                myAnimator.SetBool("Up", false);
+                myAnimator.SetBool("Down", false);
+                mySpriteRend.sortingOrder = 0;
+                if (myPlayerNumName == "Player2")
+                {
+                    if (facingRight)
+                        Flip();
+                }
+            }
+            else if (myWinPos == (Vector2)transform.position)
+            {
+                myRigidbody.velocity = new Vector2();
+                if (!GameObject.Find("Hearts"))
+                {
+                    GameObject hearts = Instantiate(victoryHearts, victoryHeartsPos);
+                    hearts.name = "Hearts";
+                }
+            }
         }
 
-        //Player Animation Stuff
-        myAnimator.SetFloat("Speed", myRigidbody.velocity.magnitude);
-
-        if (Input.GetAxisRaw(myPlayerNumName + "Horizontal") != 0 && myRigidbody.velocity.magnitude > 0)
-        {
-            myAnimator.SetBool("Side", true);
-            myAnimator.SetBool("Up", false);
-            myAnimator.SetBool("Down", false);
-            mySpriteRend.sortingOrder = 0;
-        }
-        else if (Input.GetAxisRaw(myPlayerNumName + "Vertical") > 0 && myRigidbody.velocity.magnitude > 0 &&
-            Input.GetAxis(myPlayerNumName + "Horizontal") != 1 && Input.GetAxis(myPlayerNumName + "Horizontal") != -1)
-        {
-            myAnimator.SetBool("Up", true);
-            myAnimator.SetBool("Down", false);
-            myAnimator.SetBool("Side", false);
-            mySpriteRend.sortingOrder = 2;
-        }
-        else if (Input.GetAxisRaw(myPlayerNumName + "Vertical") < 0 && myRigidbody.velocity.magnitude > 0 &&
-            Input.GetAxis(myPlayerNumName + "Horizontal") != 1 && Input.GetAxis(myPlayerNumName + "Horizontal") != -1)
-        {
-            myAnimator.SetBool("Down", true);
-            myAnimator.SetBool("Up", false);
-            myAnimator.SetBool("Side", false);
-            mySpriteRend.sortingOrder = 0;
-        }
     }
 
     private void FixedUpdate()
@@ -252,6 +295,24 @@ public class PlayerMotion : MonoBehaviour
         {
             attachedRB.velocity = new Vector2();
             heldDistance = currentDistance;
+        }
+    }
+
+
+    private void MovePlayerTowardsWinPosition()
+    {
+        if (GetComponent<BoxCollider2D>().enabled)
+            GetComponent<BoxCollider2D>().enabled = false;
+
+        if (myPlayerNumName == "Player1")
+        {
+            myWinPos = player1WinPos.position;
+            transform.position = Vector2.MoveTowards(transform.position, myWinPos, movementSpeed * Time.deltaTime);
+        }
+        else if (myPlayerNumName == "Player2")
+        {
+            myWinPos = player2WinPos.position;
+            transform.position = Vector2.MoveTowards(transform.position, myWinPos, movementSpeed * Time.deltaTime);
         }
     }
 }
