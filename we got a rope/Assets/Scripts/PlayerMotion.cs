@@ -8,15 +8,16 @@ public class PlayerMotion : MonoBehaviour
     public PlayerNum myPlayerNum;
     [SerializeField]
     private float movementSpeed;
-    private string myPlayerNumName;
+    public string myPlayerNumName;
     private Rigidbody2D myRigidbody;
     [SerializeField]
     private RopeHeadBehavior myRopeHead;
-    //private PlayerAnimationScript myAnimationScript;
+    private SpriteRenderer mySpriteRend;
 
     private Animator myAnimator;
 
     private bool facingRight = true;
+    private float distance = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -24,18 +25,12 @@ public class PlayerMotion : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         myPlayerNumName = myPlayerNum.ToString();
         myAnimator = GetComponent<Animator>();
-        //myAnimationScript = GetComponent<PlayerAnimationScript>();
-        // myRopeScript = GetComponent<RopeScript>();
-        //myAnimationScript.SetPlayerName(myPlayerNumName);
+        mySpriteRend = GetComponent<SpriteRenderer>();
+
     }
 
     private void Update()
     {
-        //if (animPlayerSet == false)
-        //{
-        //    myAnimationScript.player = myPlayerNumName;
-        //    animPlayerSet = true;
-        //}
 
         if (myRopeHead.myHeadState == RopeHeadState.Retracted)
         {
@@ -43,6 +38,12 @@ public class PlayerMotion : MonoBehaviour
             {
                 FireRope();
             }
+        }
+
+        if (myRopeHead.myHeadState == RopeHeadState.Attached)
+        {
+            if (Input.GetButton(myPlayerNumName + "Hold"))
+                HoldRope();
         }
 
         //Player Animation Stuff
@@ -53,7 +54,7 @@ public class PlayerMotion : MonoBehaviour
             myAnimator.SetBool("Side", true);
             myAnimator.SetBool("Up", false);
             myAnimator.SetBool("Down", false);
-
+            mySpriteRend.sortingOrder = 0;
         }
         else if (Input.GetAxisRaw(myPlayerNumName + "Vertical") > 0 && myRigidbody.velocity.magnitude > 0 &&
             Input.GetAxis(myPlayerNumName + "Horizontal") != 1 && Input.GetAxis(myPlayerNumName + "Horizontal") != -1)
@@ -61,6 +62,7 @@ public class PlayerMotion : MonoBehaviour
             myAnimator.SetBool("Up", true);
             myAnimator.SetBool("Down", false);
             myAnimator.SetBool("Side", false);
+            mySpriteRend.sortingOrder = 2;
         }
         else if (Input.GetAxisRaw(myPlayerNumName + "Vertical") < 0 && myRigidbody.velocity.magnitude > 0 &&
             Input.GetAxis(myPlayerNumName + "Horizontal") != 1 && Input.GetAxis(myPlayerNumName + "Horizontal") != -1)
@@ -68,6 +70,7 @@ public class PlayerMotion : MonoBehaviour
             myAnimator.SetBool("Down", true);
             myAnimator.SetBool("Up", false);
             myAnimator.SetBool("Side", false);
+            mySpriteRend.sortingOrder = 0;
         }
     }
 
@@ -115,5 +118,18 @@ public class PlayerMotion : MonoBehaviour
 
         //trouble: if the rope connects to something how do its segments know what sort of an offset they need to account their movement according to the attached player's
         //what sort of interactions does this rope actually need?
+    }
+
+    private void HoldRope()
+    {
+        Transform attachedObject = myRopeHead.attachedObject;
+
+        if (attachedObject == null)
+            Debug.LogError("Nothing attached, why is this showing.");
+
+        if (distance == -1)
+            distance = Vector3.Distance(transform.position, attachedObject.position);
+
+
     }
 }

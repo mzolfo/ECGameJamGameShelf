@@ -100,7 +100,7 @@ TextureImporter:
         width: 68
         height: 96
       alignment: 9
-      pivot: {x: 0.5127083, y: 0.2569559}
+      pivot: {x: 0.51270825, y: 0.3165886}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -120,7 +120,7 @@ TextureImporter:
         width: 69
         height: 100
       alignment: 9
-      pivot: {x: 0.53131014, y: 0.2753192}
+      pivot: {x: 0.5459515, y: 0.3089941}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -140,7 +140,7 @@ TextureImporter:
         width: 69
         height: 100
       alignment: 9
-      pivot: {x: 0.5438343, y: 0.26667762}
+      pivot: {x: 0.53935707, y: 0.3222877}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -155,12 +155,12 @@ TextureImporter:
       name: BlueGuySpriteSheet_3
       rect:
         serializedVersion: 2
-        x: 312
+        x: 311
         y: 0
         width: 64
         height: 100
       alignment: 9
-      pivot: {x: 0.54115075, y: 0.30988547}
+      pivot: {x: 0.6859689, y: 0.32842213}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -180,7 +180,7 @@ TextureImporter:
         width: 64
         height: 100
       alignment: 9
-      pivot: {x: 0.5135031, y: 0.29260233}
+      pivot: {x: 0.6245308, y: 0.33894405}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -200,7 +200,7 @@ TextureImporter:
         width: 67
         height: 100
       alignment: 9
-      pivot: {x: 0.46130645, y: 0.2753192}
+      pivot: {x: 0.456696, y: 0.3216609}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -220,7 +220,7 @@ TextureImporter:
         width: 67
         height: 100
       alignment: 9
-      pivot: {x: 0.46130645, y: 0.26667762}
+      pivot: {x: 0.4659178, y: 0.31301937}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -240,7 +240,7 @@ TextureImporter:
         width: 68
         height: 100
       alignment: 9
-      pivot: {x: 0.46187636, y: 0.2753192}
+      pivot: {x: 0.4664208, y: 0.3000348}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

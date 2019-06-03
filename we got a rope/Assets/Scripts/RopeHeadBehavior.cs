@@ -18,8 +18,12 @@ public class RopeHeadBehavior : MonoBehaviour
     
     private Transform myPlayer;
     private Transform otherPlayer;
+    public Transform attachedObject;
+    private MoveableBlockScript attachedObjectScript;
     private LineRenderer myLineRenderer;
     private BoxCollider2D myOwnCollider;
+
+    private bool hasReachedOtherPlayer = false;
 
     //this is the end of the rope each player fires and it needs a few rules for how it works.
 
@@ -77,35 +81,49 @@ public class RopeHeadBehavior : MonoBehaviour
 
     void RetractedMove()
     {
-        this.transform.position = myPlayer.position;
-        this.transform.rotation = new Quaternion(0, 0, 0, 0);
+        transform.position = myPlayer.position;
+        //this.transform.rotation = new Quaternion(0, 0, 0, 0);
         //when retracted, stay attached at your player's origin point and do not divert from it, keep rotation at 0
+        
 
     }
 
     void ExtendingMove()
     {
         CalculateDirectionOfExtension();
-        if (HasReachedOtherPlayer())
-        { //this normally will mean just finish the stage
-            myHeadState = RopeHeadState.Retracting;
-        }
-        else
-        {
-            float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, otherPlayer.position, step);
-        }
+
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, otherPlayer.position, step);
         //when extending move in the direction of the other player while always pointing your back to your own player.
     }
 
     void AttachedMove()
     {
         //deactivate your own head's sprite and collider, remain attached to the postion of the attached object. 
+        transform.SetParent(attachedObject, true);
+
+        attachedObjectScript = attachedObject.GetComponent<MoveableBlockScript>();
+        attachedObjectScript.attachedPlayer = myPlayer;
+        attachedObjectScript.currentState = BlockInteractionState.Grabbed;
+
+        if (Input.GetButton(myPlayer.GetComponent<PlayerMotion>().myPlayerNumName + "Fire"))
+        {
+            myHeadState = RopeHeadState.Retracting;
+        }
     }
 
     void RetractingMove()
     {
-        if (this.transform.position == myPlayer.position)
+        if (attachedObjectScript != null)
+        {
+            attachedObjectScript.currentState = BlockInteractionState.Idle;
+        }
+
+        attachedObject = null;
+        attachedObjectScript = null;
+        transform.SetParent(null);
+
+        if (transform.position == myPlayer.position)
         {
             myHeadState = RopeHeadState.Retracted;
         }
@@ -117,64 +135,62 @@ public class RopeHeadBehavior : MonoBehaviour
         //move directly at your player, keep your back pointing directly at that point. collider should be inactive.
     }
 
-    private bool HasReachedOtherPlayer()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        /*
-         * This should be changed to a trigger enter so that the sprite doesnt freak out when it hits the center of the other player.
-         * A trigger would also let us discern what exactly the hook is hitting.
-         * 
-         */
+        string playerName = myPlayer.GetComponent<PlayerMotion>().myPlayerNumName;
 
-        if (this.transform.position == otherPlayer.position)
+
+        if (playerName == "Player1")
         {
-            return true;
+            if (collision.gameObject.CompareTag("Player2"))
+            {
+                myHeadState = RopeHeadState.Retracting;
+            }
+            if (collision.gameObject.CompareTag("MoveableBlock"))
+            {
+                attachedObject = collision.transform;
+                myHeadState = RopeHeadState.Attached;
+            }
         }
-        else { return false; }       
+        if (playerName == "Player2")
+        {
+            if (collision.gameObject.CompareTag("Player1"))
+            {
+                myHeadState = RopeHeadState.Retracting;
+            }
+            if (collision.gameObject.CompareTag("MoveableBlock"))
+            {
+                attachedObject = collision.transform;
+                myHeadState = RopeHeadState.Attached;
+            }
+        }
     }
 
     private Vector3 CalculateDirectionOfMyPlayer()
     {
         //this object.position - player.position
-        return this.transform.position - myPlayer.position;
+        return transform.position - myPlayer.position;
     }
 
     private Vector3 CalculateDirectionOfExtension()
     {
         //myplayer.position - otherplayer.position
-        return this.transform.position - otherPlayer.position;
+        return transform.position - otherPlayer.position;
     }
-    /*
-    float step = speed * Time.deltaTime;
-    transform.position = Vector3.MoveTowards(transform.position, aerialObjective, step);
-    */
+    
     private void FaceAwayFromPlayer()
     {
-        if (myHeadState != RopeHeadState.Retracted)
-        {
-            if (!myOwnCollider.enabled)
-            {
-                myOwnCollider.enabled = true;
-                GetComponent<SpriteRenderer>().enabled = true;
-            }
-            Vector3 ForwardsDirection = CalculateDirectionOfExtension();
 
-            float rotZ = Mathf.Atan2(ForwardsDirection.y, ForwardsDirection.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, rotZ + 90);
-            /*
-            Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg; // find the angle in degrees
-            transform.rotation = Quaternion.Euler(0f, 0f, rotZ);
-            */
-        }
-        else
+        if (!myOwnCollider.enabled)
         {
-            if (myOwnCollider.enabled)
-            {
-                myOwnCollider.enabled = false;
-                GetComponent<SpriteRenderer>().enabled = false;
-            }
-            transform.rotation = new Quaternion(0, 0, 0, 0);
+            myOwnCollider.enabled = true;
+            GetComponent<SpriteRenderer>().enabled = true;
         }
+        Vector3 ForwardsDirection = CalculateDirectionOfExtension();
+
+        float rotZ = Mathf.Atan2(ForwardsDirection.y, ForwardsDirection.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + 90);
+
     }
 
 }

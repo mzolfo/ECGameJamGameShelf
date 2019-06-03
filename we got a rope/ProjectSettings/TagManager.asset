@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Background
   - Hook
+  - Player1
+  - Player2
+  - MoveableBlock
   layers:
   - Default
   - TransparentFX
