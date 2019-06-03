@@ -18,6 +18,9 @@ public class PlayerMotion : MonoBehaviour
 
     private Animator myAnimator;
 
+    [SerializeField]
+    private Transform otherPlayer;
+
     private bool facingRight = true;
     private float heldDistance = -1;
 
@@ -125,6 +128,8 @@ public class PlayerMotion : MonoBehaviour
 
     private void FireRope()
     {
+      
+
         myRopeHeadScript.myHeadState = RopeHeadState.Extending;
         //we want this one to fire a segmented rope in a line in the direction of the other player, what do we need.
        //take it in steps: first we calculate which direction the rope will fire in
@@ -144,7 +149,8 @@ public class PlayerMotion : MonoBehaviour
             VerticalBlockMove();
         if (attachedObject.GetComponent<MoveableBlockScript>().myBlockMovementType == BlockMovementType.Horizontal)
             HorizontalBlockMove();
-
+        if (attachedObject.GetComponent<MoveableBlockScript>().myBlockMovementType == BlockMovementType.OmniDirectional)
+            OmniDirectionalMove();
     }
 
     private void VerticalBlockMove()
@@ -206,6 +212,37 @@ public class PlayerMotion : MonoBehaviour
                 Debug.Log("You are below");
 
                 if (Input.GetAxisRaw(myPlayerNumName + "Horizontal") <= 0)
+                    attachedRB.velocity = myRigidbody.velocity;
+            }
+            else
+                attachedRB.velocity = new Vector2();
+        }
+        else if (currentDistance < heldDistance)
+        {
+            attachedRB.velocity = new Vector2();
+            heldDistance = currentDistance;
+        }
+    }
+    private void OmniDirectionalMove()
+    {
+        Rigidbody2D attachedRB = attachedObject.GetComponent<Rigidbody2D>();
+        if (attachedObject == null)
+            Debug.LogError("Nothing attached, why is this showing.");
+        if (heldDistance == -1)
+            heldDistance = Vector3.Distance(transform.position, attachedObject.position);
+        float currentDistance = Vector3.Distance(transform.position, attachedObject.position);
+        if (currentDistance > heldDistance)
+        {
+            if (transform.position.y > myRopeHead.position.y + 1 || transform.position.x > myRopeHead.position.x + 1)
+            {
+                Debug.Log("You are above");
+                if (Input.GetAxisRaw(myPlayerNumName + "Vertical") >= 0 || Input.GetAxisRaw(myPlayerNumName + "Horizontal") >= 0)
+                    attachedRB.velocity = myRigidbody.velocity;
+            }
+            else if (transform.position.y < myRopeHead.position.y - 1|| transform.position.x < myRopeHead.position.x - 1)
+            {
+                Debug.Log("You are below");
+                if (Input.GetAxisRaw(myPlayerNumName + "Vertical") <= 0 || Input.GetAxisRaw(myPlayerNumName + "Horizontal") <= 0)
                     attachedRB.velocity = myRigidbody.velocity;
             }
             else

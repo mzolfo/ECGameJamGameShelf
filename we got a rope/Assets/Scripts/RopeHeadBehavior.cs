@@ -15,7 +15,11 @@ public class RopeHeadBehavior : MonoBehaviour
     private int MyAssignedPlayer;
     [SerializeField]
     private float speed;
-    
+    [SerializeField]
+    private LayerMask player1Mask;
+    [SerializeField]
+    private LayerMask player2Mask;
+
     private Transform myPlayer;
     private Transform otherPlayer;
     public Transform attachedObject;
@@ -66,7 +70,17 @@ public class RopeHeadBehavior : MonoBehaviour
         }
         else if (myHeadState == RopeHeadState.Extending)
         {
-            ExtendingMove();
+            if (myPlayer.GetComponent<PlayerMotion>().myPlayerNumName == "Player1")
+            {
+                RaycastHit2D hit = Physics2D.CircleCast(transform.position, 2, otherPlayer.position, Mathf.Infinity, player1Mask);
+                if (hit.collider.CompareTag("Player2"))
+                    Debug.Log("Hit player");  
+                //yay win
+
+                else
+                    ExtendingMove();
+            }
+            
         }
         else if (myHeadState == RopeHeadState.Retracting)
         {
@@ -76,22 +90,26 @@ public class RopeHeadBehavior : MonoBehaviour
         {
             AttachedMove();
         }
-        //myLineRenderer.SetPosition(0, transform.position);
-        //myLineRenderer.SetPosition(1, myPlayer.position);
         FaceAwayFromPlayer();
     }
 
     void RetractedMove()
     {
         transform.position = myPlayer.position;
-        //this.transform.rotation = new Quaternion(0, 0, 0, 0);
-        //when retracted, stay attached at your player's origin point and do not divert from it, keep rotation at 0
-        
+        if (myOwnCollider.enabled)
+        {
+            myOwnCollider.enabled = false;
+        }
 
     }
 
     void ExtendingMove()
     {
+
+        if (!myOwnCollider.enabled)
+        {
+            myOwnCollider.enabled = true;
+        }
         CalculateDirectionOfExtension();
 
         float step = speed * Time.deltaTime;
@@ -101,6 +119,10 @@ public class RopeHeadBehavior : MonoBehaviour
 
     void AttachedMove()
     {
+        if (myOwnCollider.enabled)
+        {
+            myOwnCollider.enabled = false;
+        }
         //deactivate your own head's sprite and collider, remain attached to the postion of the attached object. 
         transform.SetParent(attachedObject, true);
 
@@ -119,6 +141,10 @@ public class RopeHeadBehavior : MonoBehaviour
 
     void RetractingMove()
     {
+        if (myOwnCollider.enabled)
+        {
+            myOwnCollider.enabled = false;
+        }
         if (attachedObjectScript != null)
         {
             attachedObjectScript.currentState = BlockInteractionState.Idle;
@@ -151,11 +177,13 @@ public class RopeHeadBehavior : MonoBehaviour
             {
                 myHeadState = RopeHeadState.Retracting;
             }
-            if (collision.gameObject.CompareTag("MoveableBlock"))
+            else if (collision.gameObject.CompareTag("MoveableBlock") || collision.gameObject.layer == 12)
             {
                 attachedObject = collision.transform;
                 myHeadState = RopeHeadState.Attached;
             }
+            else if (collision.gameObject.CompareTag("ImmobileBlock") || collision.gameObject.CompareTag("PushableBlock") || collision.gameObject.layer == 13)
+                myHeadState = RopeHeadState.Retracting;
         }
         if (playerName == "Player2")
         {
@@ -163,39 +191,34 @@ public class RopeHeadBehavior : MonoBehaviour
             {
                 myHeadState = RopeHeadState.Retracting;
             }
-            if (collision.gameObject.CompareTag("MoveableBlock"))
+            else if (collision.gameObject.CompareTag("MoveableBlock") || collision.gameObject.layer == 13)
             {
                 attachedObject = collision.transform;
                 myHeadState = RopeHeadState.Attached;
             }
+            else if (collision.gameObject.CompareTag("ImmobileBlock") || collision.gameObject.CompareTag("PushableBlock") || collision.gameObject.layer == 12)
+                myHeadState = RopeHeadState.Retracting;
         }
     }
 
     private Vector3 CalculateDirectionOfMyPlayer()
     {
-        //this object.position - player.position
         return transform.position - myPlayer.position;
     }
 
     private Vector3 CalculateDirectionOfExtension()
     {
-        //myplayer.position - otherplayer.position
         return transform.position - otherPlayer.position;
     }
     
     private void FaceAwayFromPlayer()
     {
-
-        if (!myOwnCollider.enabled)
-        {
-            myOwnCollider.enabled = true;
-            GetComponent<SpriteRenderer>().enabled = true;
-        }
         Vector3 ForwardsDirection = CalculateDirectionOfExtension();
 
         float rotZ = Mathf.Atan2(ForwardsDirection.y, ForwardsDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + 90);
 
     }
+    
 
 }

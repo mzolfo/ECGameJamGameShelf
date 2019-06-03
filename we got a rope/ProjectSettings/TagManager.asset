@@ -9,6 +9,8 @@ TagManager:
   - Player1
   - Player2
   - MoveableBlock
+  - ImmobileBlock
+  - PushableBlock
   layers:
   - Default
   - TransparentFX
@@ -20,11 +22,11 @@ TagManager:
   - 
   - Rope
   - Background
-  - Player
+  - Player1
   - Hook
-  - 
-  - 
-  - 
+  - BlueBlock
+  - OrangeBlock
+  - Player2
   - 
   - 
   - 

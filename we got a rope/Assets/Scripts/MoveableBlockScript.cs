@@ -37,11 +37,17 @@ public class MoveableBlockScript : MonoBehaviour
     {
         /* Needs a way to decern that the grappling hook has attached itself. Probably done in the 
          * Ropehead behavior script changing the current state of the block that it collides with */
-
+        if (!pushable)
+            myRigidbody.mass = 99999;
+        else
+        {
+            myRigidbody.mass = 1;
+            myRigidbody.drag = 100;
+        }
 
         if (currentState == BlockInteractionState.Grabbed)
         {
-            
+
             mySpriteRenderer.sprite = activeSprite;
 
             if (ropeHeld)
@@ -55,16 +61,21 @@ public class MoveableBlockScript : MonoBehaviour
                 else if (myBlockMovementType == BlockMovementType.OmniDirectional)
                     OmniDirectionalMovement();
             }
-            else if (!pushable)
-            {
-                myRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-            }
 
         }
-        else if (!pushable)
+        else if (pushable)
         {
-            //something about pushable shit
-            myRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+            if (myBlockMovementType == BlockMovementType.Horizontal)
+                HorizontalMovement();
+            else if (myBlockMovementType == BlockMovementType.Vertical)
+                VerticalMovement();
+            else if (myBlockMovementType == BlockMovementType.Pivot)
+                PivotMovement();
+            else if (myBlockMovementType == BlockMovementType.OmniDirectional)
+                OmniDirectionalMovement();
+        }
+        else
+        {
             mySpriteRenderer.sprite = idleSprite;
         }
             
