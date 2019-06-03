@@ -99,6 +99,7 @@ MonoBehaviour:
   movementSpeed: 100
   myPlayerNumName: 
   myRopeHead: {fileID: 0}
+  otherPlayer: {fileID: 0}
 --- !u!50 &5179460644449743994
 Rigidbody2D:
   serializedVersion: 4

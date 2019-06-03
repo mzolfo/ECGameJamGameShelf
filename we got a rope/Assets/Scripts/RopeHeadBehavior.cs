@@ -14,7 +14,7 @@ public class RopeHeadBehavior : MonoBehaviour
     [SerializeField]
     private int MyAssignedPlayer;
     [SerializeField]
-    private float speed;
+    private float speed = 100;
     [SerializeField]
     private LayerMask player1Mask;
     [SerializeField]
@@ -24,9 +24,16 @@ public class RopeHeadBehavior : MonoBehaviour
     private Transform otherPlayer;
     public Transform attachedObject;
     private MoveableBlockScript attachedObjectScript;
-    private LineRenderer myLineRenderer;
+    //private LineRenderer myLineRenderer;
+    [SerializeField]
+    private NewTestRopeScript MyAttachedRope;
     private BoxCollider2D myOwnCollider;
     private Rigidbody2D myRigidBody;
+    private AudioSource CollisionSounds;
+    [SerializeField]
+    private AudioClip TinkSound;
+    [SerializeField]
+    private AudioClip AttachSound;
 
     private bool hasReachedOtherPlayer = false;
 
@@ -47,8 +54,11 @@ public class RopeHeadBehavior : MonoBehaviour
     void Start()
     {//do we need this to repeat as we enter new scenes?
         myOwnCollider = GetComponent<BoxCollider2D>();
-        myLineRenderer = GetComponent<LineRenderer>();
+        //myLineRenderer = GetComponent<LineRenderer>();
         myRigidBody = GetComponent<Rigidbody2D>();
+        player1Mask = LayerMask.GetMask("Default", "Player2", "OrangeBlock", "BlueBlock");
+        player2Mask = LayerMask.GetMask("Default", "Player1", "OrangeBlock", "BlueBlock");
+        CollisionSounds = GetComponent<AudioSource>();
         if (MyAssignedPlayer == 1)
         {
             myPlayer = Player1.transform;
@@ -70,16 +80,7 @@ public class RopeHeadBehavior : MonoBehaviour
         }
         else if (myHeadState == RopeHeadState.Extending)
         {
-            if (myPlayer.GetComponent<PlayerMotion>().myPlayerNumName == "Player1")
-            {
-                RaycastHit2D hit = Physics2D.CircleCast(transform.position, 2, otherPlayer.position, Mathf.Infinity, player1Mask);
-                if (hit.collider.CompareTag("Player2"))
-                    Debug.Log("Hit player");  
-                //yay win
-
-                else
-                    ExtendingMove();
-            }
+            CheckIfPlayerHasBeenHit();
             
         }
         else if (myHeadState == RopeHeadState.Retracting)
@@ -91,6 +92,21 @@ public class RopeHeadBehavior : MonoBehaviour
             AttachedMove();
         }
         FaceAwayFromPlayer();
+
+        if (myHeadState == RopeHeadState.Retracted || myHeadState == RopeHeadState.Attached)
+        {
+            if (MyAttachedRope.AudioIsPlaying)
+            {
+                MyAttachedRope.StopRopeNoise();
+            }
+        }
+        else if (myHeadState == RopeHeadState.Retracting || myHeadState == RopeHeadState.Extending)
+        {
+            if (!MyAttachedRope.AudioIsPlaying)
+            {
+                MyAttachedRope.PlayRopeNoise();
+            }
+        }
     }
 
     void RetractedMove()
@@ -175,32 +191,45 @@ public class RopeHeadBehavior : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player2"))
             {
-                myHeadState = RopeHeadState.Retracting;
+                BounceOffObject();
             }
             else if (collision.gameObject.CompareTag("MoveableBlock") || collision.gameObject.layer == 12)
             {
-                attachedObject = collision.transform;
-                myHeadState = RopeHeadState.Attached;
+                AttachToObject(collision.transform);
             }
             else if (collision.gameObject.CompareTag("ImmobileBlock") || collision.gameObject.CompareTag("PushableBlock") || collision.gameObject.layer == 13)
-                myHeadState = RopeHeadState.Retracting;
+            { BounceOffObject(); }
         }
         if (playerName == "Player2")
         {
             if (collision.gameObject.CompareTag("Player1"))
             {
-                myHeadState = RopeHeadState.Retracting;
+                BounceOffObject();
             }
             else if (collision.gameObject.CompareTag("MoveableBlock") || collision.gameObject.layer == 13)
             {
-                attachedObject = collision.transform;
-                myHeadState = RopeHeadState.Attached;
+                AttachToObject(collision.transform);
             }
             else if (collision.gameObject.CompareTag("ImmobileBlock") || collision.gameObject.CompareTag("PushableBlock") || collision.gameObject.layer == 12)
-                myHeadState = RopeHeadState.Retracting;
+            { BounceOffObject(); }
         }
     }
 
+
+    private void AttachToObject(Transform CollidedObject)
+    {
+        attachedObject = CollidedObject.transform;
+        myHeadState = RopeHeadState.Attached;
+        CollisionSounds.clip = AttachSound;
+        CollisionSounds.Play();
+    }
+
+    private void BounceOffObject()
+    {
+        myHeadState = RopeHeadState.Retracting;
+        CollisionSounds.clip = TinkSound;
+        CollisionSounds.Play();
+    }
     private Vector3 CalculateDirectionOfMyPlayer()
     {
         return transform.position - myPlayer.position;
@@ -219,6 +248,36 @@ public class RopeHeadBehavior : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + 90);
 
     }
-    
 
+    private void CheckIfPlayerHasBeenHit()
+    {
+        if (MyAssignedPlayer == 1)
+        {
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, 2, otherPlayer.position, Mathf.Infinity, player1Mask);
+            if (hit.collider.CompareTag("Player2"))
+            {
+                Debug.Log("Hit player2");
+                hasReachedOtherPlayer = true;
+            }
+            //yay win
+            else
+            {
+                ExtendingMove();
+            }  
+        }
+        else if (MyAssignedPlayer == 2)
+        {
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, 2, otherPlayer.position, Mathf.Infinity, player2Mask);
+            if (hit.collider.CompareTag("Player1"))
+            {
+                Debug.Log("Hit player1");
+                hasReachedOtherPlayer = true;
+            }
+            //then win
+            else
+            {
+                ExtendingMove();
+            }
+        }
+    }
 }

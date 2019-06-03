@@ -7,13 +7,15 @@ public class NewTestRopeScript : MonoBehaviour
 
     // Need to add functionality to be able to change target of this since this will
     // be used for multiple players
-
+    private AudioSource myAudioSource;
     private LineRenderer myLine;
+    public bool AudioIsPlaying;
     [SerializeField]
     private Transform target; 
 
     void Start()
     {
+        myAudioSource = GetComponent<AudioSource>();
         myLine = GetComponent<LineRenderer>();
         myLine.positionCount = 2;
         transform.Rotate(Vector3.forward * -90);
@@ -27,5 +29,17 @@ public class NewTestRopeScript : MonoBehaviour
         float distance = Vector2.Distance(transform.position, target.position);
         myLine.material.mainTextureScale = new Vector2(distance * 2, 1);
 
+    }
+
+    public void PlayRopeNoise()
+    {
+        myAudioSource.Play();
+        AudioIsPlaying = true;
+    }
+
+    public void StopRopeNoise()
+    {
+        myAudioSource.Stop();
+        AudioIsPlaying = false;
     }
 }
