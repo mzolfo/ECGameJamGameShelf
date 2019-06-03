@@ -6,8 +6,6 @@ public enum BlockInteractionState { Idle, Grabbed };
 public enum BlockMovementType { Horizontal, Vertical, Pivot, OmniDirectional };
 public class MoveableBlockScript : MonoBehaviour
 {
-
-    
     public BlockMovementType myBlockMovementType;
 
     //public enum InteractionState { Idle, Grabbed };
@@ -31,12 +29,7 @@ public class MoveableBlockScript : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         mySpriteRenderer = GetComponent<SpriteRenderer>();
         idleSprite = mySpriteRenderer.sprite; //Thought this might just save some editor work for us
-    }
-
-    void Update()
-    {
-        /* Needs a way to decern that the grappling hook has attached itself. Probably done in the 
-         * Ropehead behavior script changing the current state of the block that it collides with */
+        ConstrainMovementAccordingtoMovementType();
         if (!pushable)
             myRigidbody.mass = 99999;
         else
@@ -44,35 +37,15 @@ public class MoveableBlockScript : MonoBehaviour
             myRigidbody.mass = 1;
             myRigidbody.drag = 100;
         }
+    }
 
+    void Update()
+    {
+        /* Needs a way to decern that the grappling hook has attached itself. Probably done in the 
+         * Ropehead behavior script changing the current state of the block that it collides with */
         if (currentState == BlockInteractionState.Grabbed)
         {
-
             mySpriteRenderer.sprite = activeSprite;
-
-            if (ropeHeld)
-            {
-                if (myBlockMovementType == BlockMovementType.Horizontal)
-                    HorizontalMovement();
-                else if (myBlockMovementType == BlockMovementType.Vertical)
-                    VerticalMovement();
-                else if (myBlockMovementType == BlockMovementType.Pivot)
-                    PivotMovement();
-                else if (myBlockMovementType == BlockMovementType.OmniDirectional)
-                    OmniDirectionalMovement();
-            }
-
-        }
-        else if (pushable)
-        {
-            if (myBlockMovementType == BlockMovementType.Horizontal)
-                HorizontalMovement();
-            else if (myBlockMovementType == BlockMovementType.Vertical)
-                VerticalMovement();
-            else if (myBlockMovementType == BlockMovementType.Pivot)
-                PivotMovement();
-            else if (myBlockMovementType == BlockMovementType.OmniDirectional)
-                OmniDirectionalMovement();
         }
         else
         {
@@ -81,31 +54,16 @@ public class MoveableBlockScript : MonoBehaviour
             
     }
 
-    private void HorizontalMovement()
+    private void ConstrainMovementAccordingtoMovementType()
     {
-        //When a player tries to move a Horizontal movement type block
-        myRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
-    }
-
-    private void VerticalMovement()
-    {
-        //When a player tries to move a Vertical movement type block
-        //float distance = Vector2.Distance(transform.position, attachedPlayer.position);
-        //Debug.Log("Current distance between block and player: " + distance);
-        myRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
-        
-    }
-
-    private void PivotMovement()
-    {
-        //When a player tries to move a Pivot movement type block
-        myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX;
-    }
-
-    private void OmniDirectionalMovement()
-    {
-        //When a player tries to move an OmniDirectional movement type block
-        myRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        if (myBlockMovementType == BlockMovementType.Horizontal)
+        { myRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY; }
+        else if (myBlockMovementType == BlockMovementType.Vertical)
+        { myRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX; }
+        else if (myBlockMovementType == BlockMovementType.Pivot)
+        { myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX; }
+        else if (myBlockMovementType == BlockMovementType.OmniDirectional)
+        { myRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation; }
     }
 
 }
