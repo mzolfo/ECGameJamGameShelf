@@ -20,6 +20,8 @@ public class MusicAndTransitionManager : MonoBehaviour
     private AudioClip LevelMusicStart;
     [SerializeField]
     private AudioClip LevelMusicLoop;
+    [SerializeField]
+    private AudioClip FinalVictoryFanfare;
     private bool WaitingOnTransition;
     private AudioSource MainMusicSource;
     [SerializeField]
@@ -46,6 +48,11 @@ public class MusicAndTransitionManager : MonoBehaviour
         CheckSoundTrackMustBeLooped();
         CheckPlayerHasWon();
         frigginTimerChecks();
+
+        if (Input.GetButtonDown("Cancel"))
+        {
+            ReturnToMainMenu();
+        }
         //if (whitePlate != null)
        //{
           //  WhitePlateIsWhite = whitePlate.GetComponent<WhitePlate>().fadedToWhite;
@@ -82,7 +89,18 @@ public class MusicAndTransitionManager : MonoBehaviour
     {
         if (PlayerMotion.hasWon && waitForPlayerMessyTimer == -1)
         {
-            waitForPlayerMessyTimer = 1000;
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(5))
+            {
+                waitForPlayerMessyTimer = 1200;
+                MainMusicSource.clip = FinalVictoryFanfare;
+                MainMusicSource.Play();
+                returningToMenu = true;
+            }
+            else
+            {
+                waitForPlayerMessyTimer = 250;
+            }
+            
         }
     }
     public void EnterLevelFromMainMenu()
