@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6949075014942861214}
   m_Layer: 13
   m_Name: OrangeOmniBlock
-  m_TagString: Untagged
+  m_TagString: MoveableBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,6 +144,6 @@ MonoBehaviour:
   myBlockMovementType: 3
   currentState: 0
   attachedPlayer: {fileID: 0}
-  activeSprite: {fileID: 0}
+  activeSprite: {fileID: 21300000, guid: 06a116498c524fc4a83c50d9a3a62fcd, type: 3}
   pushable: 0
   ropeHeld: 0

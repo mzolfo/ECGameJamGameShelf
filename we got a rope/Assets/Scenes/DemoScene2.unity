@@ -259,11 +259,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7951213656777626775, guid: 0a9c1ba5b21fd0f4d9f81abfc89fef1d,
-        type: 3}
-      propertyPath: myBlockMovementType
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a9c1ba5b21fd0f4d9f81abfc89fef1d, type: 3}
 --- !u!1001 &1131742820
@@ -666,16 +661,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RopeHead1
       objectReference: {fileID: 0}
-    - target: {fileID: 2949435919976898024, guid: cd06c7fd3ec28504dbd512841abeef60,
-        type: 3}
-      propertyPath: Player1
-      value: 
-      objectReference: {fileID: 1717524339}
-    - target: {fileID: 2949435919976898024, guid: cd06c7fd3ec28504dbd512841abeef60,
-        type: 3}
-      propertyPath: Player2
-      value: 
-      objectReference: {fileID: 1820683600}
     - target: {fileID: 2949435919976898030, guid: cd06c7fd3ec28504dbd512841abeef60,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -731,6 +716,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2949435919976898024, guid: cd06c7fd3ec28504dbd512841abeef60,
+        type: 3}
+      propertyPath: Player1
+      value: 
+      objectReference: {fileID: 1717524339}
+    - target: {fileID: 2949435919976898024, guid: cd06c7fd3ec28504dbd512841abeef60,
+        type: 3}
+      propertyPath: Player2
+      value: 
+      objectReference: {fileID: 1820683600}
     - target: {fileID: 4155701426256419436, guid: cd06c7fd3ec28504dbd512841abeef60,
         type: 3}
       propertyPath: target
@@ -749,11 +744,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BlueOmniBlock
-      objectReference: {fileID: 0}
-    - target: {fileID: 4543763004683452123, guid: ae814f8ee96f4aa43a8a65518cca4ea3,
-        type: 3}
-      propertyPath: m_TagString
-      value: MoveableBlock
       objectReference: {fileID: 0}
     - target: {fileID: 5449062802967766471, guid: ae814f8ee96f4aa43a8a65518cca4ea3,
         type: 3}
@@ -1036,16 +1026,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RopeHead2
       objectReference: {fileID: 0}
-    - target: {fileID: 5001511580265860961, guid: b68d9edf9a0401f44ac429e929ec418c,
-        type: 3}
-      propertyPath: Player1
-      value: 
-      objectReference: {fileID: 1717524339}
-    - target: {fileID: 5001511580265860961, guid: b68d9edf9a0401f44ac429e929ec418c,
-        type: 3}
-      propertyPath: Player2
-      value: 
-      objectReference: {fileID: 1820683600}
     - target: {fileID: 5001511580265860967, guid: b68d9edf9a0401f44ac429e929ec418c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1101,6 +1081,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -89.993004
       objectReference: {fileID: 0}
+    - target: {fileID: 5001511580265860961, guid: b68d9edf9a0401f44ac429e929ec418c,
+        type: 3}
+      propertyPath: Player1
+      value: 
+      objectReference: {fileID: 1717524339}
+    - target: {fileID: 5001511580265860961, guid: b68d9edf9a0401f44ac429e929ec418c,
+        type: 3}
+      propertyPath: Player2
+      value: 
+      objectReference: {fileID: 1820683600}
     - target: {fileID: 6064787882175285477, guid: b68d9edf9a0401f44ac429e929ec418c,
         type: 3}
       propertyPath: target
@@ -1119,11 +1109,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OrangeOmniBlock
-      objectReference: {fileID: 0}
-    - target: {fileID: 7271185637488928672, guid: fa90cc4d7250e2a4d8fb593e3b0516bd,
-        type: 3}
-      propertyPath: m_TagString
-      value: MoveableBlock
       objectReference: {fileID: 0}
     - target: {fileID: 1186756841937632444, guid: fa90cc4d7250e2a4d8fb593e3b0516bd,
         type: 3}
@@ -1180,12 +1165,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6949075014942861214, guid: fa90cc4d7250e2a4d8fb593e3b0516bd,
-        type: 3}
-      propertyPath: activeSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b47bb67f5454bac47987aae064ec1031,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa90cc4d7250e2a4d8fb593e3b0516bd, type: 3}
 --- !u!1001 &8777703380211886068

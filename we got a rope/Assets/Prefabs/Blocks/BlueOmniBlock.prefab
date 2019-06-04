@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4293850571769839333}
   m_Layer: 12
   m_Name: BlueOmniBlock
-  m_TagString: Untagged
+  m_TagString: MoveableBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,6 +144,6 @@ MonoBehaviour:
   myBlockMovementType: 3
   currentState: 0
   attachedPlayer: {fileID: 0}
-  activeSprite: {fileID: 0}
+  activeSprite: {fileID: 21300000, guid: 894b2cf96658991448b2659ab485bd6b, type: 3}
   pushable: 0
   ropeHeld: 0

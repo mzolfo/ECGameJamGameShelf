@@ -141,9 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7da6417a0aed0f148aec82059ab1931a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myBlockMovementType: 0
+  myBlockMovementType: 1
   currentState: 0
   attachedPlayer: {fileID: 0}
-  activeSprite: {fileID: 21300000, guid: 58263b369c1bd694fa81597547d0a863, type: 3}
+  activeSprite: {fileID: 21300000, guid: 119a114605e1aca45ac9182d70d913a3, type: 3}
   pushable: 0
   ropeHeld: 0
