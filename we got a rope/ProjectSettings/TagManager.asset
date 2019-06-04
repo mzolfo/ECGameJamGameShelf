@@ -57,3 +57,6 @@ TagManager:
   - name: HookArm
     uniqueID: 3940789657
     locked: 0
+  - name: HeartAnim
+    uniqueID: 3827380173
+    locked: 0

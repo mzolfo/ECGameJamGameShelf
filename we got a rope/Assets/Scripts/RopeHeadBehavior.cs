@@ -209,7 +209,8 @@ public class RopeHeadBehavior : MonoBehaviour
                 SetWin();
                 myHeadState = RopeHeadState.Retracted;
             }
-            else if (collision.gameObject.CompareTag("MoveableBlock") || collision.gameObject.layer == 12 && !collision.gameObject.CompareTag("PushableBlock"))
+            else if (collision.gameObject.CompareTag("MoveableBlock") && !collision.gameObject.CompareTag("PushableBlock") && collision.gameObject.layer != 13 ||
+                collision.gameObject.layer == 12 && !collision.gameObject.CompareTag("PushableBlock") && collision.gameObject.layer != 13)
             {
                 AttachToObject(collision.transform);
             }
@@ -224,7 +225,8 @@ public class RopeHeadBehavior : MonoBehaviour
                 SetWin();
                 myHeadState = RopeHeadState.Retracted;
             }
-            else if (collision.gameObject.CompareTag("MoveableBlock") || collision.gameObject.layer == 13 && !collision.gameObject.CompareTag("PushableBlock"))
+            else if (collision.gameObject.CompareTag("MoveableBlock") && !collision.gameObject.CompareTag("PushableBlock") && collision.gameObject.layer != 12 || 
+                collision.gameObject.layer == 13 && !collision.gameObject.CompareTag("PushableBlock") && collision.gameObject.layer != 12)
             {
                 AttachToObject(collision.transform);
             }

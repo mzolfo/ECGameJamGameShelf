@@ -98,8 +98,18 @@ MonoBehaviour:
   myPlayerNum: 1
   movementSpeed: 100
   myPlayerNumName: 
-  myRopeHead: {fileID: 0}
-  otherPlayer: {fileID: 0}
+  myRopeHead: {fileID: 5001511580265860967, guid: b68d9edf9a0401f44ac429e929ec418c,
+    type: 3}
+  otherPlayer: {fileID: 5179460644449743993, guid: 74789d90b7281964e94563524b39b5f5,
+    type: 3}
+  player1WinPos: {fileID: 432807169646231424, guid: 8bb385ef48d4f8441929eca17d16d121,
+    type: 3}
+  player2WinPos: {fileID: 2036033755049241489, guid: 55e8e9f0b5803144db5683f152877045,
+    type: 3}
+  victoryHeartsPos: {fileID: 255034033998590096, guid: a5ec6b82f2f85c54aaeef215820da7f1,
+    type: 3}
+  victoryHearts: {fileID: 5756897944681509304, guid: 8d123f182cf3bc4429463cf7ff02de31,
+    type: 3}
 --- !u!50 &5807018074192016028
 Rigidbody2D:
   serializedVersion: 4
@@ -137,7 +147,7 @@ BoxCollider2D:
   m_Offset: {x: 0.019786358, y: -0.16366644}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.514898, y: 0.31716442}
+    pivot: {x: 0.5, y: 0.33}
     oldSize: {x: 0.69, y: 0.97}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5

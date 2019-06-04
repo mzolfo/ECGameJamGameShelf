@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myHeadState: 0
-  Player1: {fileID: 0}
-  Player2: {fileID: 0}
+  Player1: {fileID: 5179460644449743998, guid: 74789d90b7281964e94563524b39b5f5, type: 3}
+  Player2: {fileID: 5807018074192016031, guid: 3acbe97f07d484f408471eecedd4da14, type: 3}
   MyAssignedPlayer: 2
   speed: 10
   player1Mask:
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioIsPlaying: 0
-  target: {fileID: 0}
+  target: {fileID: 5807018074192016025, guid: 3acbe97f07d484f408471eecedd4da14, type: 3}
 --- !u!82 &1056012911
 AudioSource:
   m_ObjectHideFlags: 0
