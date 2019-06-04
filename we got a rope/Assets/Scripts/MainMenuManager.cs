@@ -10,6 +10,8 @@ public class MainMenuManager : MonoBehaviour
     private GameObject CreditsScreen;
     [SerializeField]
     private GameObject MainMenuObject;
+    [SerializeField]
+    private MusicAndTransitionManager MainManager;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +33,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void StartButton()
     {
-        SceneManager.LoadScene(1);
+        MainManager.BeginSceneTransition();
     }
     public void ExitButton()
     {

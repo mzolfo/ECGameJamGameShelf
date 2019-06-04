@@ -6,6 +6,7 @@ public class WhitePlate : MonoBehaviour
 {
     public bool fadedToWhite;
     private Animator myAnimator;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +15,7 @@ public class WhitePlate : MonoBehaviour
     private void Awake()
     {
         fadedToWhite = false;
+        //DontDestroyOnLoad(gameObject);
     }
     // Update is called once per frame
     void Update()
@@ -22,15 +24,17 @@ public class WhitePlate : MonoBehaviour
     }
     public void FadeToWhite()
     {
-        myAnimator.SetInteger("FadeState", 2);
+        //myAnimator.SetInteger("FadeState", 2);
+       
     }
 
     public void FadeFromWhite()
     {
-        myAnimator.SetInteger("FadeState", 1);
+        //myAnimator.SetInteger("FadeState", 1);
     }
     public void Endframe()
     {
         fadedToWhite = true;
+        
     }
 }
